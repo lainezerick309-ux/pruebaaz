@@ -10,23 +10,9 @@
 
 <div class="hero">
 
-  <iframe 
-    id="trailer"
-    class="bg-video"
-    src=""
-    frameborder="0"
-    allow="autoplay; fullscreen"
-    allowfullscreen>
-  </iframe>
+  <iframe id="trailer" class="bg-video" src="" frameborder="0" allow="autoplay; fullscreen"></iframe>
 
-  <iframe 
-    id="iframe2"
-    class="player"
-    src=""
-    frameborder="0"
-    allowfullscreen
-    sandbox="allow-same-origin allow-scripts">
-  </iframe>
+  <iframe id="iframe2" class="player" src="" frameborder="0" allowfullscreen sandbox="allow-same-origin allow-scripts"></iframe>
 
   <div class="overlay">
     <h1 id="title"></h1>
@@ -40,7 +26,7 @@
     <p class="sinopsis" id="sinopsis"></p>
 
     <div class="buttons">
-      <button class="play" onclick="playVideo()">
+      <button class="play" onclick="openServerModal()">
         <i class="fa-solid fa-play"></i> Play
       </button>
 
@@ -53,11 +39,39 @@
       </button>
 
       <button class="icon" onclick="playTrailerSound()">
-  <i class="fa-solid fa-volume-high"></i>
-</button>
+        <i class="fa-solid fa-volume-high"></i>
+      </button>
     </div>
   </div>
 
+</div>
+
+<!-- MODAL SERVIDORES -->
+<div id="serverModal" class="modal">
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h2>SERVERS</h2>
+      <span onclick="closeModal()">✕</span>
+    </div>
+
+    <div class="server-item" onclick="startServer(server1)">
+      <div>
+        <p>Servidor 1</p>
+        <span>HD • Latino</span>
+      </div>
+      <i class="fa-solid fa-play"></i>
+    </div>
+
+    <div class="server-item" onclick="startServer(server2)">
+      <div>
+        <p>Servidor 2</p>
+        <span>HD • Latino</span>
+      </div>
+      <i class="fa-solid fa-play"></i>
+    </div>
+
+  </div>
 </div>
 
 <div class="actors">
@@ -78,14 +92,17 @@ let trailerURL = "";
 let sinopsis = "";
 let year = "";
 let genre = "";
-let videoReal = "";
+let server1 = "";
+let server2 = "";
 
 if (title === "BATMAN") {
   trailerURL = "https://www.youtube.com/embed/mqqft2x_Aa4?autoplay=1&mute=1&controls=0&loop=1&playlist=mqqft2x_Aa4";
   sinopsis = "Batman explora la corrupción existente en la ciudad de Gotham y el vínculo de esta con su propia familia.";
   year = "2022";
   genre = "Action / Crime";
-  videoReal = "https://vimeos.net/embed-z44va8djlfyu.html";
+
+  server1 = "https://vimeos.net/embed-z44va8djlfyu.html";
+  server2 = "https://drive.google.com/file/d/1otVonrrZRxlv6Kz2hFppE8K5pw7FTAHb/preview";
 }
 
 else if (title === "Super Mario Galaxy") {
@@ -93,15 +110,45 @@ else if (title === "Super Mario Galaxy") {
   sinopsis = "Super Mario Galaxy: la película es una película de acción, aventura y comedia animada por ordenador basada en la franquicia de videojuegos Mario de Nintendo";
   year = "2026";
   genre = "Infantil / Animada";
-  videoReal = "https://drive.google.com/file/d/1ORr6BsccnNITBUO_K8tTjWC0AnBdLx5B/preview";
+
+  server1 = "https://drive.google.com/file/d/1otVonrrZRxlv6Kz2hFppE8K5pw7FTAHb/preview";
+  server2 = "https://ok.ru/videoembed/14268369603105";
 }
 
 else if (title === "Proyecto Salvación") {
   trailerURL = "https://www.youtube.com/embed/jz6JB0LCNRs?autoplay=1&mute=1&controls=0&loop=1&playlist=jz6JB0LCNRs";
-  sinopsis = "Project Hail Mary es una película de aventuras de ciencia ficción estadounidense producida y dirigida por Phil Lord y Christopher Miller a partir de un guion de Drew Goddard, adaptado de la novela homónima de Andy Weir de 2021";
+  sinopsis = "Project Hail Mary es una película de aventuras de ciencia ficción estadounidense...";
   year = "2026";
   genre = "Acción / Drama";
-  videoReal = "https://drive.google.com/file/d/1dgNMrCfHIKP-MVjpE0gv_hXDHuQhKTWx/preview";
+
+  server1 = "https://drive.google.com/file/d/1dgNMrCfHIKP-MVjpE0gv_hXDHuQhKTWx/preview";
+  server2 = "https://drive.google.com/file/d/1otVonrrZRxlv6Kz2hFppE8K5pw7FTAHb/preview";
+}
+
+else if (title === "Yo Antes de Ti") {
+
+  trailerURL = "https://www.youtube.com/embed/FRrc2X4Uzm4?autoplay=1&mute=1&controls=0&loop=1&playlist=FRrc2X4Uzm4";
+
+  sinopsis = "La vida de Louisa Clark, una chica alegre y alocada, que va empalmando un trabajo con otro para ayudar a su familia, cambia por completo cuando comienza a trabajar como cuidadora de Will Traynor.";
+
+  year = "2016";
+  genre = "Romance / Drama";
+
+  server1 = "https://ok.ru/videoembed/9593002134020";
+  server2 = "";
+}
+
+else if (title === "A Traves De Mi Ventana") {
+
+  trailerURL = "https://www.youtube.com/embed/ibjAgqsgQzc?autoplay=1&mute=1&controls=0&loop=1&playlist=ibjAgqsgQzc";
+
+  sinopsis = "La atracción de Raquel por su vecino se convierte en algo más cuando él empieza a enamorarse de ella, pese a las objeciones de su familia";
+
+  year = "2016";
+  genre = "Romance / Drama";
+
+  server1 = "https://ok.ru/videoembed/7219329567279";
+  server2 = "";
 }
 
 document.getElementById("trailer").src = trailerURL;
@@ -109,10 +156,21 @@ document.getElementById("sinopsis").innerText = sinopsis;
 document.getElementById("year").innerText = year;
 document.getElementById("genre").innerText = genre;
 
-function playVideo() {
+function openServerModal() {
+  document.getElementById("serverModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("serverModal").style.display = "none";
+}
+
+function startServer(server) {
+  document.getElementById("serverModal").style.display = "none";
+
   const iframe = document.getElementById("iframe2");
-  iframe.src = videoReal;
+  iframe.src = server;
   iframe.style.display = "block";
+
   document.getElementById("trailer").style.display = "none";
 }
 
@@ -120,6 +178,10 @@ function playTrailerSound() {
   const trailer = document.getElementById("trailer");
   trailer.src = trailer.src.replace("mute=1", "mute=0") + "&autoplay=1";
 }
+
+document.getElementById("serverModal").onclick = function () {
+  this.style.display = "none";
+};
 </script>
 
 </body>
